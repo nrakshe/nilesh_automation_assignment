@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite thread-count="-1" guice-stage="DEVELOPMENT" name="Failed suite [SmokeSuite]">
+  <test name="smoketest(failed)">
+    <groups>
+      <run>
+        <include name="smoke"/>
+      </run>
+    </groups>
+    <classes>
+      <class name="com.vmware.peoplesearch.test.TestCases">
+        <methods>
+          <include name="successfulLoginTest"/>
+          <include name="setup"/>
+          <include name="getResult"/>
+        </methods>
+      </class> <!-- com.vmware.peoplesearch.test.TestCases -->
+    </classes>
+  </test> <!-- smoketest(failed) -->
+</suite> <!-- Failed suite [SmokeSuite] -->

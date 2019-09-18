@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
+<suite name="SmokeSuite" parallel="false">
+	<test name="config">
+		<classes>
+			<class name="com.sample.amazon.appiumSetup.SuiteSetup" />
+			<class name="com.sample.amazon.appiumSetup.TearDown" />
+		</classes>
+	</test>
+	
+	<test name="test">
+		<classes>
+			<class name="com.sample.amazon.test.TestCases" />
+		</classes>
+	</test>
+</suite>
