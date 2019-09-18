@@ -21,3 +21,5 @@ dependency-reduced-pom.xml
 .springBeans
 Thumbs.db
 /uploads/
+test-output/
+allure-results/
