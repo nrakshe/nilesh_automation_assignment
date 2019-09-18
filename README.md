@@ -1,4 +1,4 @@
-# nilesh_automation_assignment
+# Mobile_Automation_Using_Appium
 
 NOTE: Description:
 I have automated the basic flow of Amazon app. This will help you to cretae a good testing framework. This is just a basic but I will add more features/scenarios/reports in upcoming days. I'll also add how to integrate with Docker/Jenkins/SauceLab" etc.   
