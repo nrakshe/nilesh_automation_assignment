@@ -19,8 +19,8 @@
 		<slf4j.version>1.7.5</slf4j.version>
 		<logback.core.version>1.0.1</logback.core.version>
 		<logback.classic.version>1.0.1</logback.classic.version>
-		<extent.version>3.0.6</extent.version>
-		<rest.assured.version>2.9.0</rest.assured.version>
+		<extent.version>3.0.6</extent.version><rest.assured.version>2.9.0</rest.assured.version>
+		
 		<json.version>20160212</json.version>
 		<guava.version>24.0-jre</guava.version>
 		<common.codec.version>1.9</common.codec.version>
@@ -214,9 +214,9 @@
 				<version>${maven.surefire.plugin.version}</version>
 				<configuration>
 					<!-- Suite testng xml file to consider for test execution -->
-					<suiteXmlFiles>
+					<!-- <suiteXmlFiles>
 						<suiteXmlFile>${suiteName}</suiteXmlFile>
-					</suiteXmlFiles>
+					</suiteXmlFiles> -->
 				</configuration>
 			</plugin>
 			<!-- Compiler plugin configures the java version to be used for compiling 

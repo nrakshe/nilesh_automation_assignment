@@ -12,7 +12,6 @@ public class LoginScreen extends BaseScreen{
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(LoginScreen.class);
 	//private ExcelReader excel = new ExcelReader();
-	
 
 	
 	public void verifyLogin(String username , String password) {

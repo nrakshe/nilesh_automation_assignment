@@ -1,24 +1,29 @@
-/*
- * Copyright (c) 2018 VMware, Inc. All rights reserved.
- *
- */
-
 package com.sample.amazon.screens;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
+
 import org.apache.commons.codec.binary.Base64;
 import org.apache.commons.codec.binary.StringUtils;
+import org.apache.commons.io.IOUtils;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Dimension;
 import org.openqa.selenium.NoSuchElementException;
+import org.openqa.selenium.OutputType;
+import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.testng.Assert;
+
+import com.sample.amazon.appiumSetup.Drivers;
 import com.sample.amazon.appiumSetup.SuiteSetup;
+
 import io.appium.java_client.MobileBy;
 import io.appium.java_client.MobileElement;
 import io.appium.java_client.TouchAction;
@@ -110,25 +115,7 @@ public class BaseScreen {
 		return elements;
 	}
 
-	/**
-	 * Wait for visibility of the element.
-	 * 
-	 * @param xpath
-	 * 
-	 */
-	protected void waitUntilVisible(String xpath) {
-		if (xpath.contains("xpath")) {
-			while (SuiteSetup.driver.findElements(By.xpath(SuiteSetup.selectorProp.getProperty(xpath))).isEmpty()) {
-			}
-		} else if (xpath.contains("acc_id")) {
-			while (SuiteSetup.driver.findElements(MobileBy.AccessibilityId(SuiteSetup.selectorProp.getProperty(xpath)))
-					.isEmpty()) {
-			}
-		} else {
-			while (SuiteSetup.driver.findElements(MobileBy.id(SuiteSetup.selectorProp.getProperty(xpath))).isEmpty()) {
-			}
-		}
-	}
+	
 
 	/**
 	 * Wait for a elements visibility for specified time.
@@ -136,7 +123,7 @@ public class BaseScreen {
 	 * @param xpath locator name from properties.
 	 */
 	protected void waitUntilVisiblityWithTime(String xpath) {
-		WebDriverWait wait = new WebDriverWait(SuiteSetup.driver, 100);
+		WebDriverWait wait = new WebDriverWait(SuiteSetup.driver, 200);
 		if (xpath.contains("xpath")) {
 			LOGGER.info("Waiting for xpath : {} ", xpath);
 			wait.until(ExpectedConditions
@@ -247,6 +234,51 @@ public class BaseScreen {
 		}
 	}
 
+	protected void swipeTaskLeft() {
+		TouchAction actions = new TouchAction(SuiteSetup.driver);
+		//Dimension size = SuiteSetup.driver.manage().window().getSize();
+		Dimension size = getElement("product_swipe_id").getSize();	
+		LOGGER.info("Current Screen width:{}", size.width);
+		LOGGER.info("Current Screen height:{}", size.height);
+		int startx = (int) (size.width * 0.90);
+		int endx = (int) (size.width * 0.05);
+		int starty = (int) (size.height * 0.65);
+			try {
+				if (SuiteSetup.targetMobileOS.contains("Android")) {
+					actions.press(PointOption.point(startx, starty)).waitAction()
+							.moveTo(PointOption.point(endx, starty)).release().perform();
+				} else {
+//				actions.press(startx, starty).waitAction(Duration.ofSeconds(5)).moveTo(-(startx - endx), 0).release()
+//						.perform();
+				}
+				Thread.sleep(500);
+			} catch (InterruptedException e) {
+				LOGGER.error("Couldnot perform action. Error occured.", e);
+			}
+	}
+	
+	
+	
+	 public String captureScreenShot() {
+
+		    File scrFile = ((TakesScreenshot) new Drivers()).getScreenshotAs(OutputType.FILE);
+		    String encodedBase64 = null;
+		    FileInputStream fileInputStreamReader = null;
+		    try {
+		      fileInputStreamReader = new FileInputStream(scrFile);
+		      byte[] bytes = new byte[(int) scrFile.length()];
+		      fileInputStreamReader.read(bytes);
+		      encodedBase64 = new String(Base64.encodeBase64(bytes));
+		    } catch (IOException e) {
+		      LOGGER.error("Exception in performing IO actions.", e);
+		    } finally {
+		      IOUtils.closeQuietly(fileInputStreamReader);
+		    }
+		    return "data:image/png;base64," + encodedBase64;
+		  }
+	
+	
+	
 	/**
 	 * Method to swipe up.
 	 */

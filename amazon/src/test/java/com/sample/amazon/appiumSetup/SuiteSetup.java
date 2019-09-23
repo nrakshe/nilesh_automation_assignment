@@ -4,8 +4,6 @@
  */
 package com.sample.amazon.appiumSetup;
 
-import io.appium.java_client.AppiumDriver;
-import io.appium.java_client.MobileElement;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -13,17 +11,25 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.Properties;
 import java.util.concurrent.TimeUnit;
-import org.apache.commons.io.IOUtils;
+
+import org.apache.commons.compress.utils.IOUtils;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.testng.annotations.BeforeSuite;
+import org.testng.annotations.BeforeTest;
+
+import io.appium.java_client.AppiumDriver;
+import io.appium.java_client.MobileElement;
+import io.appium.java_client.remote.AndroidMobileCapabilityType;
 
 /**
  * Setup required before running the suite appium setup.
  * 
  *
  */
+
+
+
 public class SuiteSetup {
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(SuiteSetup.class);
@@ -46,27 +52,19 @@ public class SuiteSetup {
 	 * @throws InterruptedException
 	 * 
 	 */
-	@BeforeSuite
+	
+	@BeforeTest
+	
 	public static void setUp() throws MalformedURLException, InterruptedException {
 
-		appiumIP = System.getProperty("env.INSTANCE_IP");
-		LOGGER.info("Instance_IP : {}", appiumIP);
-		targetMobileOS = System.getProperty("env.OS");
-		LOGGER.info("Platform : {}", targetMobileOS);
-		appPath = System.getProperty("env.APP_PATH");
-		LOGGER.info("AppPath : {}", appPath);
-		suiteName = System.getProperty("env.suiteName");
-		LOGGER.info("Suite Name : {}", suiteName);
-		osVersion = System.getProperty("env.OS_VERSION");
-		LOGGER.info("Platform : {}", osVersion);
 		InputStream inputLocators = null;
 		InputStream inputCapability = null;
 		try {
-			inputLocators = new FileInputStream("src/test/resources/" + targetMobileOS + ".properties");
+			inputLocators = new FileInputStream("src/test/resources/" + "Android" + ".properties");
 			selectorProp.load(inputLocators);
 			LOGGER.info("Locator file loaded : src/test/resources/{}.properties", targetMobileOS);
 			inputCapability = new FileInputStream(
-					"src/test/resources/Appium" + targetMobileOS + "Capabilities" + ".properties");
+					"src/test/resources/Appium" + "Android" + "Capabilities" + ".properties");
 			capabilityProp.load(inputCapability);
 			LOGGER.info("Appium Capabilities File loaded : src/test/resources/Appium{}Capabilities.properties",
 					targetMobileOS);
@@ -75,25 +73,27 @@ public class SuiteSetup {
 		} finally {
 			IOUtils.closeQuietly(inputLocators);
 		}
-
+		
+		LOGGER.info("capability file loaded");
 		DesiredCapabilities capabilities = new DesiredCapabilities();
 
-		if (targetMobileOS.contains("Android")) {
 			LOGGER.info("Setting driver for android");
 			capabilities.setCapability("appium-version", capabilityProp.getProperty("appium_version"));
-			capabilities.setCapability("app", appPath);
-			capabilities.setCapability("platformVersion", osVersion);
-			capabilities.setCapability("platformName", targetMobileOS);
+			capabilities.setCapability("platformVersion", capabilityProp.getProperty("platformVersion"));
+			capabilities.setCapability("platformName", capabilityProp.getProperty("platformName"));
 			capabilities.setCapability("deviceName", capabilityProp.getProperty("deviceName"));
 			capabilities.setCapability("name", capabilityProp.getProperty("app_name"));
 			capabilities.setCapability("fullReset", capabilityProp.getProperty("fullReset"));
 			capabilities.setCapability("noReset", capabilityProp.getProperty("noReset"));
 			capabilities.setCapability("appPackage", capabilityProp.getProperty("appPackage"));
 			capabilities.setCapability("appActivity", capabilityProp.getProperty("appActivity"));
+			capabilities.setCapability("appActivity", capabilityProp.getProperty("appActivity"));
+			capabilities.setCapability("app", capabilityProp.getProperty("apkPath"));
 			LOGGER.info("Android driver loaded");
 
-		}
-		driver = new AppiumDriver<MobileElement>((new URL("http://" + appiumIP + ":4723/wd/hub")), capabilities);
+		
+		
+		driver = new AppiumDriver<MobileElement>(new URL("http://0.0.0.0:4723/wd/hub"), capabilities);
 		driver.manage().timeouts().implicitlyWait(100, TimeUnit.SECONDS);
 	}
 
