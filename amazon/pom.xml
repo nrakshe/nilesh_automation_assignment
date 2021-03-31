@@ -22,7 +22,7 @@
 		<extent.version>3.0.6</extent.version><rest.assured.version>2.9.0</rest.assured.version>
 		
 		<json.version>20160212</json.version>
-		<guava.version>24.0-jre</guava.version>
+		<guava.version>29.0-jre</guava.version>
 		<common.codec.version>1.9</common.codec.version>
 		<commons.io.version>2.5</commons.io.version>
 		<maven.surefire.plugin.version>2.20.1</maven.surefire.plugin.version>
