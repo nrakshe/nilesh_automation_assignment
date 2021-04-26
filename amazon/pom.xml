@@ -24,7 +24,7 @@
 		<json.version>20160212</json.version>
 		<guava.version>24.0-jre</guava.version>
 		<common.codec.version>1.9</common.codec.version>
-		<commons.io.version>2.5</commons.io.version>
+		<commons.io.version>2.7</commons.io.version>
 		<maven.surefire.plugin.version>2.20.1</maven.surefire.plugin.version>
 		<maven.compiler.plugin.version>3.7.0</maven.compiler.plugin.version>
 		<compiler.version>1.8</compiler.version>
