@@ -28,7 +28,7 @@
 		<maven.surefire.plugin.version>2.20.1</maven.surefire.plugin.version>
 		<maven.compiler.plugin.version>3.7.0</maven.compiler.plugin.version>
 		<compiler.version>1.8</compiler.version>
-		<gson.version>2.8.2</gson.version>
+		<gson.version>2.8.9</gson.version>
 		<findbugs.maven.version>3.0.1</findbugs.maven.version>
 		<jackson.core.version>2.7.0</jackson.core.version>
 		<github.bonigarcia.version>2.0.1</github.bonigarcia.version>
